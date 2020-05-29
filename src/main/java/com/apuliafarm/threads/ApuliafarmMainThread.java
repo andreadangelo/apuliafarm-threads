@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Date;
 import java.util.Properties;
 
 import org.slf4j.Logger;
@@ -11,7 +12,8 @@ import org.slf4j.LoggerFactory;
 
 public class ApuliafarmMainThread {
 	private  static final Logger logger = LoggerFactory.getLogger(ApuliafarmMainThread.class);	
-	public static void main(String[] args) {		
+	public static void main(String[] args) {	
+		logger.info("**** start : " + new Date());
 		try (InputStream input = new FileInputStream("target/classes/apuliafarm-thread.properties")) {
 			Properties prop = new Properties();
 			prop.load(input);
@@ -26,6 +28,7 @@ public class ApuliafarmMainThread {
 			}
 		} catch (IOException e) {
 			logger.error("Error", e);
-		}		
+		}
+		logger.info("**** end: " + new Date());
 	}
 }
