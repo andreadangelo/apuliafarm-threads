@@ -30,6 +30,9 @@ public class WorkCvsThread implements Runnable {
 		this.file = file;
 		this.restURL = restURL;
 	}
+	public WorkCvsThread(){
+		super();
+	}
 	
 	public void run() {
 		BufferedReader br = null;

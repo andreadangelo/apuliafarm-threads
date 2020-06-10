@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
 import java.util.Properties;
-
+import com.apuliafarm.threads.WorkCvsThread;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,7 +14,9 @@ public class ApuliafarmMainThread {
 	private  static final Logger logger = LoggerFactory.getLogger(ApuliafarmMainThread.class);	
 	public static void main(String[] args) {	
 		logger.info("**** start : " + new Date());
-		try (InputStream input = new FileInputStream("target/classes/apuliafarm-thread.properties")) {
+		InputStream input = null;
+		try {
+			input = new FileInputStream("target/classes/apuliafarm-thread.properties");
 			Properties prop = new Properties();
 			prop.load(input);
 			File folder = new File(prop.getProperty("products.dir.path"));
@@ -23,7 +25,8 @@ public class ApuliafarmMainThread {
 			for (File f : folder.listFiles()) {
 				System.out.println(f.getAbsolutePath());
 				if (f.isFile()) {
-					new Thread(new WorkCvsThread(f,backupPath, restURL )).run();
+					WorkCvsThread thread  = new WorkCvsThread(f,backupPath, restURL );
+					new Thread(thread).run();
 				}
 			}
 		} catch (IOException e) {
